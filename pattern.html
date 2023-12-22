@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rectangle with PNG Content</title>
+  <style>
+    canvas {
+      border: 1px solid #000; /* Add a border for better visibility */
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="200"></canvas>
+
+  <script>
+    window.onload = function() {
+      // Get the canvas element
+      var canvas = document.getElementById("myCanvas");
+
+      // Get the 2D rendering context
+      var ctx = canvas.getContext("2d");
+
+      // Create an Image object
+      var img = new Image();
+
+      // Set the source of the image (replace 'path/to/your/image.png' with the actual path to your PNG image)
+      img.src = 'floor.png';
+
+      // Wait for the image to load
+      img.onload = function() {
+        // Create a pattern using the image
+        var pattern = ctx.createPattern(img, 'repeat');
+
+        // Set the fill style to the pattern
+        ctx.fillStyle = pattern;
+
+        // Draw a rectangle filled with the pattern (x, y, width, height)
+        ctx.fillRect(50, 50, 100, 80);
+      };
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Animation</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="200"></canvas>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+
+      var obstacle = {
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 50,
+        color: "brown"
+      };
+
+      var bullet = {
+        x: 200,
+        y: 50,
+        width: 100,
+        height: 50,
+        color: "black"
+      };
+
+      function drawObject(obj) {
+        ctx.fillStyle = obj.color;
+        ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update your objects or do any other logic here
+
+        // Draw the objects
+        drawObject(obstacle);
+        drawObject(bullet);
+
+        // Request the next animation frame
+        requestAnimationFrame(animate);
+      }
+
+      // Start the animation loop
+      animate();
+    };
+  </script>
+</body>
+</html>

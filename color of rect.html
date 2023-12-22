@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Change Rectangle Color on Hover</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="800" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    const rectangles = [];
+
+    // Function to create a rectangle object
+    function createRectangle(x, y, width, height, color) {
+      return { x, y, width, height, color, isHovered: false };
+    }
+
+    // Function to draw all rectangles in the array
+    function drawRectangles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      rectangles.forEach(rect => {
+        ctx.fillStyle = rect.isHovered ? 'yellow' : rect.color;
+        ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+      });
+    }
+
+    // Function to handle the mousemove event
+    function handleMouseMove(event) {
+      const mouseX = event.clientX - canvas.offsetLeft;
+      const mouseY = event.clientY - canvas.offsetTop;
+
+      // Check if the cursor is over any rectangle
+      rectangles.forEach(rect => {
+        rect.isHovered = (mouseX >= rect.x && mouseX <= rect.x + rect.width &&
+                         mouseY >= rect.y && mouseY <= rect.y + rect.height);
+      });
+    }
+
+    // Add the mousemove event listener
+    canvas.addEventListener('mousemove', handleMouseMove);
+
+    // Main rendering loop
+    function loop() {
+      drawRectangles();
+      window.requestAnimationFrame(loop);
+    }
+
+    // Add some initial rectangles for demonstration
+    rectangles.push(createRectangle(100, 100, 50, 50, 'red'));
+    rectangles.push(createRectangle(200, 200, 60, 40, 'blue'));
+
+    // Start the rendering loop
+    window.requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Platformer Collision Detection</title>
+  <style>
+    #gameCanvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const player = {
+      x: 50,
+      y: 50,
+      width: 50,
+      height: 50,
+      speed: 5,
+      isJumping: false,
+      jumpSpeed: 10,
+      jumpHeight: 150,
+    };
+
+    const platforms = [
+      { x: 0, y: 200, width: 800, height: 20 },
+      { x: 300, y: 300, width: 200, height: 20 },
+      // Add more platforms as needed
+    ];
+
+    function drawPlayer() {
+      ctx.fillStyle = "blue";
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+
+    function drawPlatforms() {
+      ctx.fillStyle = "green";
+      platforms.forEach((platform) => {
+        ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+      });
+    }
+
+    function checkCollision(rect1, rect2) {
+      return (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y
+      );
+    }
+
+    function update() {
+      // Move the player horizontally (you can handle player input here)
+      player.x += player.speed;
+
+      // Handle player jumping
+      if (player.isJumping) {
+        player.y -= player.jumpSpeed;
+        if (player.y <= player.jumpHeight) {
+          player.isJumping = false;
+        }
+      } else {
+        // Apply gravity to the player
+        player.y += player.jumpSpeed;
+      }
+
+      // Check for collisions with each platform
+      platforms.forEach((platform) => {
+        if (checkCollision(player, platform)) {
+          // Check if the player's bottom edge is above the platform
+          if (player.y + player.height <= platform.y + player.jumpSpeed) {
+            player.isJumping = false;
+            player.y = platform.y - player.height;
+          } else {
+            // Player collided with the platform from the side or below
+            player.speed = 0;
+          }
+        }
+      });
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the player and platforms
+      drawPlayer();
+      drawPlatforms();
+
+      // Request the next animation frame
+      requestAnimationFrame(update);
+    }
+
+    // Start the game loop
+    update();
+  </script>
+</body>
+</html>

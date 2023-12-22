@@ -1,0 +1,27 @@
+#game{
+    display:none;
+    border: 1px solid black;
+    background-color: green;
+}
+
+#editor{
+    display:block;
+    border: 1px solid black;
+}
+
+#editor-button{
+    display:none;  
+}
+
+.pushed-button {
+    background-color: #999;
+    color: #fff;
+}
+
+#buttons{
+    display:flex;
+}
+
+#game, #editor{
+    margin-top: 10px;
+}
