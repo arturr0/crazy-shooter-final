@@ -21,7 +21,3 @@
 #buttons{
     display:flex;
 }
-
-#game, #editor{
-    margin-top: 10px;
-}
